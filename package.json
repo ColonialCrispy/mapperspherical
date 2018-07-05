@@ -12,6 +12,7 @@
         "discord.js": "^11.3.2",
         "jimp": "^0.2.28",
         "fs": "0.0.1-security",
+        "planet-facts": "^0.1.0",
         "ms": "^2.1.1"
     }
 }
