@@ -3,7 +3,6 @@ const fs = require (`fs`);
 const Jimp = require(`jimp`)
 const ms = require (`ms`);
 var client = new discord.Client(); 
-const token = `NDYyODMwOTg1OTEwOTQzNzU0.Dh6rtg.qxaSS9B7CYOq6TJMwd4CdhMc_6o`;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 var client = new discord.Client(); 
 const token = process.env.token;
