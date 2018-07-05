@@ -2,6 +2,7 @@ const discord = require ('discord.js');
 const fs = require (`fs`);
 const Jimp = require(`jimp`)
 const ms = require (`ms`);
+const planets = require('planet-facts');
 var client = new discord.Client(); 
 const token = process.env.token;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
