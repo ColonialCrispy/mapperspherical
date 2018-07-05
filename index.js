@@ -2,12 +2,15 @@ const discord = require ('discord.js');
 const fs = require (`fs`);
 const ms = require (`ms`);
 var client = new discord.Client(); 
-const token = `NDYyODMwOTg1OTEwOTQzNzU0.DhpWag.IWulU9Y1Ub489QZLdNQEDsbWkvY`;
+const token = process.env.token;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 
 client.on ("ready", () => {
-    console.log ("Colonial >.<")
+    console.log ("Colonial smells")
     client.user.setActivity ("m!help")
+    client.user.setAvatar("https://cdn.discordapp.com/attachments/459817725095575558/464146169409437696/mappersphere_2.png")
+    client.user.setUsername("Mappersphere")
+    
 
     answered = true;
     cAnswer = "";
