@@ -23,7 +23,117 @@ client.on ("ready", () => {
     nameAnswer = "";
     userResponse2 = ""; 
     cAnswer = "";
+    
+    
 });
+
+client.on(`emojiCreate`, emoji => {
+    let eChannel = emoji.guild.channels.find(`name`, `logs`)
+    eChannel.send(emoji + " has been created!")
+})
+
+client.on(`emojiDelete`, emoji => {
+    let eChannel = emoji.guild.channels.find(`name`, `logs`)
+    eChannel.send(emoji + " has been deleted!")
+})
+
+client.on(`guildBanAdd`, (guild, user) => {
+    let eChannel = guild.channels.find(`name`, `logs`)
+    eChannel.send(user + " has been banned!")
+})
+
+client.on(`guildBanRemove`, (guild, user) => {
+    let eChannel = guild.channels.find(`name`, `logs`)
+    eChannel.send(user + " has been unbanned!")
+})
+
+client.on(`channelDelete`, channel => {
+    let eChannel = channel.guild.channels.find(`name`, `logs`)
+    const embed = new discord.RichEmbed()
+    embed.setColor(`BLUE`)
+    embed.setThumbnail(channel.guild.iconURL)
+    embed.setDescription(channel + " has been deleted")
+    eChannel.send(embed)
+})
+
+client.on(`channelCreate`, channel => {
+    let eChannel = channel.guild.channels.find(`name`, `logs`)
+    const embed = new discord.RichEmbed()
+    embed.setColor(`BLUE`)
+    embed.setThumbnail(channel.guild.iconURL)
+    embed.setDescription(channel + " has been added")
+    eChannel.send(embed)
+})
+
+client.on(`guildMemberUpdate`, (oldMember, newMember) => {
+    let eChannel = oldMember.guild.channels.find(`name`, `logs`)
+    eChannel.send(`${oldMember} is now ${newMember}`)
+})
+
+client.on(`roleCreate`, role => {
+    let eChannel = role.guild.channels.find(`name`, `logs`)
+    eChannel.send(`The role ${role} has been created.`)
+})
+
+client.on(`roleDelete`, role => {
+    let eChannel = role.guild.channels.find(`name`, `logs`)
+    eChannel.send(`The role ${role} has been deleted.`)
+})
+
+client.on(`roleUpdate`, (oldRole, newRole) => {
+    let eChannel = oldRole.guild.channels.find(`name`, `logs`)
+    eChannel.send(`The role ${oldRole} is now ${newRole}`)
+})
+
+client.on(`userUpdate`, (oldUser, newUser) => {
+    let eChannel = oldUser.guild.channels.find(`name`, `logs`)
+    eChannel.send(`The user ${oldUser} has been updated to ${newUser}`)
+})
+
+
+
+
+
+
+client.on(`messageDelete`, (message, guild) => {
+    let eChannel = message.guild.channels.find(`name`, `test`)
+    const embed = new discord.RichEmbed()
+    embed.setColor(`BLUE`)
+    embed.setTitle(`${message.author.username} has deleted their message`)
+    embed.setThumbnail(`${message.author.avatarURL}`)
+    embed.addField(`Deleted Message`, `${message}`)
+    eChannel.send(embed)
+    eChannel.send(`The Messsage ${message} has been deleted by ${message.author}.`)
+})
+
+client.on(`messageUpdate`, (oldMessage, newMessage) => {
+    if (oldMessage.author.bot) return;
+    let eChannel = oldMessage.guild.channels.find(`name`, `test`)
+    const embed = new discord.RichEmbed()
+    embed.setColor(`BLUE`)
+    embed.setTitle(`${oldMessage.author.username} has updated their message`)
+    embed.setThumbnail(oldMessage.author.avatarURL)
+    embed.addField(`Old Message`, `Old Message: ${oldMessage}`)
+    embed.addField(`New Message`, `New Message: ${newMessage}`)
+    eChannel.send(embed); 
+})
+
+client.on(`guildMemberRemove`, member => {
+    let jChannel = member.guild.channels.find(`name`, `welcome`)
+    let mAvatar = member.user.avatarURL
+    if (!jChannel) return;
+    const gembed = new discord.RichEmbed()
+    gembed.setTitle(`${member.user.username} has left the server!`)
+    gembed.setColor(`RANDOM`)
+    gembed.setThumbnail(mAvatar)
+    gembed.addField(`Name`, `${member.user.username}`)
+    gembed.addField(`Member count`, member.guild.memberCount)
+    gembed.setFooter(`${member.guild.name}` + `${member.user.displayAvatarURL}`)
+    jChannel.sendEmbed(gembed)
+
+
+
+})
 
 client.on(`guildMemberAdd`, member => {
     let jChannel = member.guild.channels.find(`name`, `conversation`)
