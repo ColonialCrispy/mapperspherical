@@ -178,6 +178,7 @@ client.on('message', async (message) => {
     let msg = message.content.toUpperCase(); // This variable takes the message, and turns it all into uppercase so it isn't case sensitive.
     let sender = message.author; // This variable takes the message, and finds who the author is.
     let cont = message.content.slice(prefix.length).split(" "); // This variable slices off the prefix, then puts the rest in an array based off the spaces
+    let xpadd = Math.floor(Math.random() * 7) + 8;
     let args = cont.slice(1);
 
     if (message.author.bot) return;
