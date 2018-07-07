@@ -107,18 +107,6 @@ client.on(`messageDelete`, (message, guild) => {
     eChannel.send(`The Messsage ${message} has been deleted by ${message.author}.`)
 })
 
-client.on(`messageUpdate`, (oldMessage, newMessage) => {
-    if (oldMessage.author.bot) return;
-    let eChannel = oldMessage.guild.channels.find(`name`, `test`)
-    const embed = new discord.RichEmbed()
-    embed.setColor(`BLUE`)
-    embed.setTitle(`${oldMessage.author.username} has updated their message`)
-    embed.setThumbnail(oldMessage.author.avatarURL)
-    embed.addField(`Old Message`, `Old Message: ${oldMessage}`)
-    embed.addField(`New Message`, `New Message: ${newMessage}`)
-    eChannel.send(embed); 
-})
-
 client.on(`guildMemberRemove`, member => {
     let jChannel = member.guild.channels.find(`name`, `welcome`)
     let mAvatar = member.user.avatarURL
