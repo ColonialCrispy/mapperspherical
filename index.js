@@ -165,6 +165,23 @@ client.on('message', async (message) => {
 
     }
     
+    if (message.content.startsWith(`m!hitname info`)) {
+        message.channel.send(`hitname is a game where two people you mention are chosen randomly. Whoever is mentioned has to change their profile picture to whatever the other person wants for 12 hours. (Note: This may only be done if both users agree to play) `)
+    }
+    
+    if(message.content.startsWith(`m!hitname`)) {
+        let user1 = message.mentions.users.first()
+        let user2 = message.mentions.users.last()
+        number = 2;
+        var random = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+        if (!user1) return message.channel.send(`Pleae mention two users next time!`)
+        if (!user2) return message.channel.send(`Pleae mention two users next time!`)
+        switch (random) {
+            case 1: message.channel.send(`${user1.toString()} has been hit!`); break;
+            case 2: message.channel.send(`${user2.toString()} has been hit!`); break;
+        }
+    }
+    
     if (message.content.startsWith(`m!safe`)) {
         let mUser = message.mentions.users.first()
         const args29 = cont.slice(1)
