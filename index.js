@@ -4,6 +4,7 @@ const Jimp = require(`jimp`)
 const ms = require (`ms`);
 const planets = require('planet-facts');
 var client = new discord.Client(); 
+let xp = require("./xp.json");
 const token = process.env.token;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 
