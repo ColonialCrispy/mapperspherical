@@ -180,6 +180,43 @@ client.on('message', async (message) => {
     let args = cont.slice(1);
 
     if (message.author.bot) return;
+    
+    if(!xp[message.author.id]) {
+        xp[message.author.id] = {
+            xp: 0,
+            level: 1
+        };
+    }
+
+    let curxp = xp[message.author.id].xp;
+    let curlevel = xp[message.author.id].level;
+    let nextlevel = xp[message.author.id].level * 300;
+    xp[message.author.id].xp =  curxp + xpadd;
+    if(nextlevel <= xp[message.author.id].xp) {
+        xp[message.author.id].level = curlevel + 1;
+        let lChannel = message.guild.channels.find(`name`, `logs`)
+        if(!lChannel) return message.channel.send(`Please create a logs channel!`)
+        let lembed = new discord.RichEmbed()
+        lembed.setTitle(`${message.author.username} has leveled up!`)
+        lembed.setColor(`blue`)
+        lembed.addField(`New Level`, curlevel + 1)
+        lembed.setThumbnail(message.author.avatarURL)
+        lChannel.send(lembed);
+        message.channel.send(`${message.author} has leveld up to level ${curlevel}!`)
+    }
+
+    fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
+        if(err) console.log(err)
+    });
+
+    if (message.content.startsWith(`c!level`)) {
+        const lembed = new discord.RichEmbed()
+        lembed.addField(`Current Level`, curlevel + 1)
+        lembed.addField(`Current XP`, curxp)
+        lembed.setThumbnail(message.author.avatarURL)
+        lembed.setColor(`BLUE`)
+        message.channel.send(lembed)
+    }
 
     if (message.content.startsWith(`m!kick`)) {
         const args7 = cont.slice(1)
