@@ -209,7 +209,7 @@ client.on('message', async (message) => {
         if(err) console.log(err)
     });
 
-    if (message.content.startsWith(`c!level`)) {
+    if (message.content.startsWith(`m!level`)) {
         const lembed = new discord.RichEmbed()
         lembed.addField(`Current Level`, curlevel + 1)
         lembed.addField(`Current XP`, curxp)
