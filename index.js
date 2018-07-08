@@ -499,6 +499,28 @@ client.on('message', async (message) => {
             )}
         )})
     }
+    
+    if (message.content.startsWith(`m!gender`)) {
+        const margs = message.content.slice(9)
+        if(!margs) return message.channel.send(`Please put your gender next time!`)
+        console.log(margs)
+        if(!gender[message.author.id]) {
+            gender[message.author.id] = {
+                gender: margs
+            }
+        }
+        fs.writeFile("./gender.json", JSON.stringify(gender), (err) => {
+            if(err) console.log(err).then(
+                
+            )
+        })
+        if (margs == `Female`) return message.channel.send(`You're gender has been set to female! :girl:`)
+        if (margs == `female`) return message.channel.send(`You're gender has been set to female! :girl:`)
+        if (margs == `male`) return message.channel.send(`You're gender has been set to male! :boy:`)
+        if (margs == `Male`) return message.channel.send(`You're gender has been set to male! :boy:`)
+        if (margs == `neutral`) return message.channel.send(`No such thing.`)
+        if (margs == `Gender Neutral`) return message.channel.send(`Lies.`)
+    }
 
     
     if (message.content.startsWith(`m!bully`)) {
