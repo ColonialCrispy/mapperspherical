@@ -70,6 +70,7 @@ client.on('message', async (message) => {
     
     if (message.content.startsWith(`m!fun`)) {
         const fuembed = new discord.RichEmbed
+        const fuuembed = new discord.RichEmbed
         fuembed.setThumbnail(message.guild.iconURL)
         fuembed.setTitle(`List of Fun Commands!`)
         fuembed.addField(`m!8ball`, `A simple 8ball command`)
@@ -97,15 +98,16 @@ client.on('message', async (message) => {
         fuembed.addField(`m!fuckmarrykill`, `Fuck Marry Kill`)
         fuembed.addField(`m!weather`, `Gives you the weather for a given city`)
         fuembed.addField(`m!truthme`, `Asks you a question`)
-        fuembed.addField(`m!myfuture`, `Your Future o.o`)
-        fuembed.addField(`m!avatar`, `Gives the avatar of a mentioned user or yourself`)
-        fuembed.addField(`m!dice`, `Rolls a dice`)
-        fuembed.addField(`m!serverinfo`, `Server Info`)
-        fuembed.addField(`m!trumpquote`, `A quote by the 45th president`)
-        fuembed.addField(`m!userinfo`, `User info`)
-        fuembed.addField(`m!gender`, `sets your gender`)
+        fuuembed.addField(`m!myfuture`, `Your Future o.o`)
+        fuuembed.addField(`m!avatar`, `Gives the avatar of a mentioned user or yourself`)
+        fuuembed.addField(`m!dice`, `Rolls a dice`)
+        fuuembed.addField(`m!serverinfo`, `Server Info`)
+        fuuembed.addField(`m!trumpquote`, `A quote by the 45th president`)
+        fuuembed.addField(`m!userinfo`, `User info`)
+        fuuembed.addField(`m!gender`, `sets your gender`)
         fuembed.setColor(`RANDOM`)
         message.channel.send(fuembed)
+        message.channel.send(fuuembed)
 
 
     }
