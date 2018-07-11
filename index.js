@@ -5,6 +5,7 @@ const ms = require (`ms`);
 const planets = require('planet-facts');
 var client = new discord.Client(); 
 let xp = require("./xp.json");
+let gender = JSON.parse(fs.readFileSync("./gender.json", "utf8"));
 const token = process.env.token;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 
