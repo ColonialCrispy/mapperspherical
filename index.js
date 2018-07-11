@@ -5,6 +5,7 @@ const ms = require (`ms`);
 const planets = require('planet-facts');
 var client = new discord.Client(); 
 let xp = require("./xp.json");
+let orientation = JSON.parse(fs.readFileSync("./orientation.json", "utf8"));
 let gender = JSON.parse(fs.readFileSync("./gender.json", "utf8"));
 const token = process.env.token;
 let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
@@ -105,6 +106,9 @@ client.on('message', async (message) => {
         fuuembed.addField(`m!trumpquote`, `A quote by the 45th president`)
         fuuembed.addField(`m!userinfo`, `User info`)
         fuuembed.addField(`m!gender`, `sets your gender`)
+        fuuembed.addField(`m!whatsmygender`, `whats your gender?`)
+        fuuembed.addField(`m!orientation`, `sets your sexual orientation`)
+        fuuembed.addField(`m!whatsmyorientation`, `whats your sexual orientation?`)
         fuembed.setColor(`RANDOM`)
         message.channel.send(fuembed)
         message.channel.send(fuuembed)
@@ -154,6 +158,38 @@ client.on('message', async (message) => {
                 }
             )}
         )})
+    }
+    
+    if (message.content.startsWith(`m!orientation`)) {
+        const margs = message.content.slice(14)
+        if(!margs) return message.channel.send(`Please put your orientation next time!`)
+        console.log(margs)
+        if(!orientation[message.author.id]) {
+            orientation[message.author.id] = {
+                orientation: margs
+            }
+        }
+        fs.writeFile("./orientation.json", JSON.stringify(orientation), (err) => {
+            if(err) console.log(err).then(       
+            )
+        })
+        if (margs == `gay`) return message.channel.send(`Not okay.`)
+        if (margs == `Gay`) return message.channel.send(`Not okay.`)
+        if (margs == `Bi`) return message.channel.send(`Not okay, who are you, Jap!?`)
+        if (margs == `bi`) return message.channel.send(`Not okay, who are you, Jap!?`)
+        if (margs == `Bisexual`) return message.channel.send(`Not okay, who are you, Jap!?`)
+        if (margs == `bisexual`) return message.channel.send(`Not okay, who are you, Jap!?`)
+        message.channel.send(`Orientation has been set!`)
+    }
+    
+    if (message.content.startsWith(`m!whatsmygender`)) {
+        if(!gender[message.author.id]) return message.channel.send(`Please set your gender! (m!gender [gender here])`)
+        message.channel.send(gender[message.author.id].gender)
+    }
+    
+    if (message.content.startsWith(`m!whatsmyorientation`)) {
+        if(!orientation[message.author.id]) return message.channel.send(`Please set your orientation! (m!orientation [orientation here])`)
+        message.channel.send(orientation[message.author.id].orientation)
     }
     
     if (message.content.startsWith(`m!solarsystem`)) {
