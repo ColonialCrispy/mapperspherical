@@ -28,42 +28,6 @@ client.on ("ready", () => {
     
 });
 
-client.on(`guildMemberAdd`, member => {
-    let jChannel = member.guild.channels.find(`name`, `logs`)
-    let mAvatar = member.user.avatarURL
-    if (!jChannel) return;
-    const gembed = new discord.RichEmbed()
-    gembed.setTitle(`${member.user.username} has joined the server!`)
-    gembed.setColor(`RANDOM`)
-    gembed.setThumbnail(mAvatar)
-    gembed.addField(`Name`, `${member.user.username}`)
-    gembed.addField(`Member count`, member.guild.memberCount)
-    gembed.setFooter(`${member.guild.name}` + `${member.user.displayAvatarURL}`)
-    jChannel.sendEmbed(gembed)
-    let jRole = message.guild.roles.find(`name`, `Student`)
-    member.addRole(jRole)
-
-
-
-})
-
-client.on(`guildMemberRemove`, member => {
-    let jChannel = member.guild.channels.find(`name`, `logs`)
-    let mAvatar = member.user.avatarURL
-    if (!jChannel) return;
-    const gembed = new discord.RichEmbed()
-    gembed.setTitle(`${member.user.username} has left the server!`)
-    gembed.setColor(`RANDOM`)
-    gembed.setThumbnail(mAvatar)
-    gembed.addField(`Name`, `${member.user.username}`)
-    gembed.addField(`Member count`, member.guild.memberCount)
-    gembed.setFooter(`${member.guild.name}` + `${member.user.displayAvatarURL}`)
-    jChannel.sendEmbed(gembed)
-
-
-
-})
-
 const prefix = "colonial pls ";
 
 client.on('message', async (message) => {
@@ -128,6 +92,17 @@ client.on('message', async (message) => {
         fuembed.addField(`m!invert`, `Image manipulation`)
         fuembed.addField(`m!thug`, `Image manipulation`)
         fuembed.addField(`m!say`, `Image manipulation`)
+        fuembed.addField(`m!meme`, `Meme Command`)
+        fuembed.addField(`m!fuckmarrykill`, `Fuck Marry Kill`)
+        fuembed.addField(`m!weather`, `Gives you the weather for a given city`)
+        fuembed.addField(`m!truthme`, `Asks you a question`)
+        fuembed.addField(`m!myfuture`, `Your Future o.o`)
+        fuembed.addField(`m!avatar`, `Gives the avatar of a mentioned user or yourself`)
+        fuembed.addField(`m!dice`, `Rolls a dice`)
+        fuembed.addField(`m!serverinfo`, `Server Info`)
+        fuembed.addField(`m!trumpquote`, `A quote by the 45th president`)
+        fuembed.addField(`m!userinfo`, `User info`)
+        fuembed.addField(`m!gender`, `sets your gender`)
         fuembed.setColor(`RANDOM`)
         message.channel.send(fuembed)
 
@@ -467,6 +442,246 @@ client.on('message', async (message) => {
                 }
             )}
         )})
+    }
+    
+    
+    if (message.content.startsWith(`m!meme`)) {
+        meme(function(data) {
+            const embed = new discord.RichEmbed()
+            .setTitle(data.title[0])
+            .setColor("RANDOM")
+            .setImage(data.url[0])
+            message.channel.send(embed);
+        })
+    }
+    if (message.content.startsWith(`m!fuckmarrykill`)) {
+
+        var membed = new discord.RichEmbed()
+        var kembed = new discord.RichEmbed()
+        var fembed = new discord.RichEmbed()
+
+        membed.setDescription(`**${args[0]} has been choosed by <@${message.author.id}>**`)
+        membed.setColor('RANDOM')
+        membed.addField(`You choosed:`, `MARRY :ring:`)
+        membed.setFooter('Fuck, Marry, Kill!', message.author.displayAvatarURL);
+
+        fembed.setDescription(`**${args[0]} has been choosed by <@${message.author.id}>**`)
+        fembed.setColor('RANDOM')
+        fembed.addField(`You choosed:`, `FUCK :sweat_drops: :eggplant:`)
+        fembed.setFooter('Fuck, Marry, Kill!', message.author.displayAvatarURL);
+
+        kembed.setDescription(`**${args[0]} has been choosed by <@${message.author.id}>**`)
+        kembed.setColor('RANDOM')
+        kembed.addField(`You choosed:`, `KILL :knife: :bomb: :person_frowning: :gun:`)
+        kembed.setFooter('Fuck, Marry, Kill!', message.author.displayAvatarURL);
+
+        if (!message.mentions.users.first()) return message.channel.send(`<@${message.author.id}>, please mention a user you wanna choose!`).then(msg => {
+            message.delete(10000)
+        })
+
+        number = 3;
+        var random = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+        switch (random) {
+            case 1: message.channel.sendEmbed(kembed); break;
+            case 2: message.channel.sendEmbed(membed); break;
+            case 3: message.channel.sendEmbed(fembed); break;
+        }
+    }
+
+    if (message.content.startsWith (`m!weather`)) {
+
+        weather.find({search: args.join(" "), degreeType: `F`}, function(err,result) {
+            if (err) message.channel.send(err);
+
+            if (result.length === 0) {
+                message.channel.send('**Please enter a valid location.**') // This tells them in chat that the place they entered is invalid.
+                return; // This exits the code so the rest doesn't run.
+            }
+            var current = result[0].current; // This is a variable for the current part of the JSON output
+            var location = result[0].location; // This is a variable for the location part of the JSON output
+
+            const weatherembed = new discord.RichEmbed()
+            var current = result[0].current; // This is a variable for the current part of the JSON output
+            var location = result[0].location; // This is a variable for the location part of the JSON output
+            weatherembed.setDescription(`**${current.skytext}**`)
+            weatherembed.setAuthor(`Weather for ${current.observationpoint}`)
+            weatherembed.setThumbnail(current.imageUrl)
+            weatherembed.setColor(`003fff`)
+            weatherembed.addField('Timezone',`UTC${location.timezone}`, true)
+            weatherembed.addField('Degree Type',location.degreetype, true)
+            weatherembed.addField('Temperature',`${current.temperature} Degrees`, true)
+            weatherembed.addField('Feels Like', `${current.feelslike} Degrees`, true)
+            weatherembed.addField('Winds', `${current.winddisplay}`, true)
+            weatherembed.addField('Humidity', `${current.humidity}%`, true)
+            
+            message.channel.sendEmbed(weatherembed)
+        })
+    }
+
+
+
+    if (message.content.startsWith(`m!truthme`)) {
+        number = 50;
+        var random = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+        switch (random) {
+            case 1: message.channel.send("What’s the dirtiest thought you’ve ever had?"); break;
+            case 2: message.channel.send("Of the people in this channel, who do you most want to make out with?"); break;
+            case 3: message.channel.send("What’s the first thing you’d do if you woke up one day and you were the opposite sex?"); break;
+            case 4: message.channel.send("What sexual activity do you consider totally off limits?"); break;
+            case 5: message.channel.send("Of the people in this channel, who do you consider the sluttiest?"); break;
+            case 6: message.channel.send("What’s the most embarrassing thing your parents have caught you doing?"); break;
+            case 7: message.channel.send("What’s the biggest romantic fail you’ve ever experienced?"); break;
+            case 8: message.channel.send("What’s the weirdest thing you’ve done when you were alone?"); break;
+            case 9: message.channel.send("Of the people in this channel, who would you feel most comfortable with naked?"); break;
+            case 10: message.channel.send("What’s the biggest secret you’ve ever kept from your parents?"); break;
+            case 11: message.channel.send("What’s the biggest lie you’ve ever told without getting caught?"); break;
+            case 12: message.channel.send("Of the people in this channel, who do you most want to switch lives with and why?"); break;
+            case 13: message.channel.send("What do you like most and least about your own appearance?"); break;
+            case 14: message.channel.send("What do you like most and least about your personality?"); break;
+            case 15: message.channel.send("If you could erase one past experience, what would it be?"); break;
+            case 16: message.channel.send("What’s the craziest thing you’ve ever done to attract a crush?"); break;
+            case 17: message.channel.send("When’s the last time you were flat-out rejected and how did you handle it?"); break;
+            case 18: message.channel.send("What’s your biggest sexual fear?"); break;
+            case 19: message.channel.send("Of the people in this channel, who do you disagree with most frequently?"); break;
+            case 20: message.channel.send("What three adjectives best describe your vagina/penis?"); break;
+            case 21: message.channel.send("When was the last time you told a lie?"); break;
+            case 22: message.channel.send("What is your biggest fear?"); break;
+            case 23: message.channel.send("What is your guilty pleasure?"); break;
+            case 24: message.channel.send("Who do you have a crush on?"); break;
+            case 25: message.channel.send("If you had to date someone in this channel, who would it be?"); break;
+            case 26: message.channel.send("Have you ever been cheated on someone?"); break;
+            case 27: message.channel.send("Have you ever been cheated on?"); break;
+            case 28: message.channel.send("What is the meanest thing that you have done?"); break;
+            case 29: message.channel.send("What girls clothing item would you want to first wear if you woke up as a girl."); break;
+            case 30: message.channel.send("Who is the last person that you stalked on social media?"); break;
+            case 31: message.channel.send("What is the craziest event that you have ever been to?"); break;
+            case 32: message.channel.send("When was the last time you peed yourself?"); break;
+            case 33: message.channel.send("What is the worst dream that you have had?"); break;
+            case 34: message.channel.send("Why did your last relationship end?"); break;
+            case 35: message.channel.send("What is the most embarrassing thing that has happened to you this year?"); break;
+            case 36: message.channel.send("What habit can’t you seem to quit?"); break;
+            case 37: message.channel.send("What gender would you want your baby to be"); break;
+            case 38: message.channel.send("Who is your celebrity crush?"); break;
+            case 39: message.channel.send("What is your least favorite thing about your best friend?"); break;
+            case 30: message.channel.send("Have you ever hooked up with the same sex?"); break;
+            case 41: message.channel.send("What is a secret that you have never told anyone before?"); break;
+            case 42: message.channel.send("How many people have you kissed?"); break;
+            case 43: message.channel.send("How many people have you been with?"); break;
+            case 44: message.channel.send("Has anyone ever accidentally seen you naked? Who?"); break;
+            case 45: message.channel.send("Have you ever gone out without wearing a bra and underwear? \n this goes to the tranny granny peruvian"); break;
+            case 46: message.channel.send("Would you stop talking to all of your friends for a million dollars?"); break;
+            case 47: message.channel.send("Have you ever committed a crime? If so, what was it?"); break;
+            case 48: message.channel.send("Who was your first crush?"); break;
+            case 49: message.channel.send("Have you ever had a crush on your teacher/professor?"); break;
+            case 50: message.channel.send("What would you do if your kid was trans?"); break;
+        }
+    }
+    
+    if (message.content.startsWith ("m!myfuture")) {
+        number = 32;
+        var random = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+        switch (random) {
+            case 1: message.channel.send ("Ants in your pants, ooh yeah there's ants in yo pants."); break;
+            case 2: message.channel.send ("You become a lawyer."); break;
+            case 3: message.channel.send ("You get married to Omega."); break;
+            case 4: message.channel.send ("You start a family with your highschool crush."); break;
+            case 5: message.channel.send ("The future cannot predict itself..."); break;
+            case 6: message.channel.send ("You commit suicide because Cloud called you fat."); break;
+            case 7: message.channel.send ("You run for some political office and win."); break;
+            case 8: message.channel.send ("You wake up as a girl."); break;
+            case 9: message.channel.send ("You run for president but lose to Wonder."); break;
+            case 10: message.channel.send ("*sigh*, no korean your crush will never go out with you."); break;
+            case 11: message.channel.send ("You will live a successful life with Cloud and Wonder as your sex slaves."); break;
+            case 12: message.channel.send ("Ask me over your cell phone."); break;
+            case 13: message.channel.send ("You and your friend.", {files: ["./images/bodypillow.jpg"]}); break;
+            case 14: message.channel.send ("Cloud."); break;
+            case 15: message.channel.send ("Use your zuccer-bucks to ask again."); break;
+            case 16: message.channel.send ("You discover Iri to be living in your basement and he bites you and gives you a poisonous venom which makes you die."); break;
+            case 17: message.channel.send ("Your korean tennis girlfriend leaves you for Jap."); break;
+            case 18: message.channel.send ("Strip Club, Pole, You on pole."); break;
+            case 19: message.channel.send ("You end up as Cloud.");break;
+            case 20: message.channel.send ("You end up homeless."); break;
+            case 21: message.channel.sned ("Neck, rope, god, god leaves, wakean appears."); break;
+            case 22: message.channel.send ("You end up in a time machine, kill west, now you no longer exist"); break;
+            case 23: message.channel.send ("You catch Wakean playing Minecraft."); break;
+            case 24: message.channel.send ("You find Jap in full anime girl cosplay making out with Wonder who doesn't know it's Jap."); break;
+        }
+    }
+    
+    if (message.content.startsWith ("m!dice")) {
+        number = 7;
+        var random = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+        switch (random) {
+            case 1: message.channel.send (":game_die: You rolled a 1! :game_die:"); break;
+            case 2: message.channel.send (":game_die: You rolled a 2! :game_die:"); break;
+            case 3: message.channel.send (":game_die: You rolled a 3! :game_die:"); break;
+            case 4: message.channel.send (":game_die: You rolled a 4! :game_die:"); break;
+            case 5: message.channel.send (":game_die: You rolled a 5! :game_die:"); break;
+            case 6: message.channel.send (":game_die: You rolled a 6! :game_die:"); break;
+            case 7: message.channel.send (":game_die: You lost your dice :( :game_die:"); break;
+        }
+    }
+    
+    if (message.content.startsWith("m!serverinfo")) {
+        const embed = new discord.RichEmbed()
+        embed.addField(`Members`, message.guild.memberCount, true)
+        embed.addField(`Name`, message.guild.name, true)
+        embed.addField(`Region`, message.guild.region, true)
+        embed.addField(`Owner`, message.guild.owner.tag, true)
+        embed.addField(`ID`, message.guild.id, true)
+        embed.setColor(`003fff`)
+        embed.setThumbnail(message.guild.iconURL)
+        message.channel.sendEmbed(embed)
+    }
+    
+    if (message.content.startsWith(`m!avatar`)) {
+        const user = message.mentions.users.first()
+        if(!user) {
+            return message.channel.send(message.author.displayAvatarURL)
+        }
+        message.channel.send(user.displayAvatarURL)
+    }
+    
+    if (message.content.startsWith(`m!searchgif`)) {
+
+        let args19 = cont.slice(1);
+        let args17 = (args19.join(' '));
+
+        if (!args[0]) return message.channel.send("Please put a gif name!");
+
+        gifSearch.query(args17).then(
+            gifUrl => {
+                var gembed = new discord.RichEmbed()
+                gembed.setColor(`RANDOM`)
+                gembed.setImage(gifUrl)
+                message.channel.sendEmbed(gembed)
+            }
+        )
+
+    }
+    
+    if (message.content.startsWith(`m!trumpquote`)) {
+        snek.get(api).then(r => {
+            let embed = new discord.RichEmbed()
+            embed.setTitle('Trump quotes generator')
+            embed.setThumbnail(`https://cdn.discordapp.com/attachments/465273405030137887/465290492704456704/download_20.jpeg`)
+            embed.setDescription(r.body.message)
+            embed.setColor('RANDOM')
+            message.channel.send(embed)
+        })
+    }
+    
+    if (message.content.startsWith("m!userinfo")) {
+        const embed2 = new discord.RichEmbed()
+        embed2.setDescription(`This user's info`)
+        embed2.setAuthor(message.author.username)
+        embed2.addField(`Gender`, gender[message.author.id].gender)
+        embed2.setColor(`003fff`)
+        embed2.addField(`Full Username`, `${message.author.username}#${message.author.discriminator}`)
+        embed2.addField(`ID`, message.author.id)
+        embed2.addField(`Created At`, message.author.createdAt)
+        embed2.setThumbnail(message.author.avatarURL)
+        message.channel.sendEmbed(embed2)
     }
     
     if (message.content.startsWith(`m!gender`)) {
