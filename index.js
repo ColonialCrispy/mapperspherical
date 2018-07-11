@@ -1,6 +1,9 @@
 const discord = require ('discord.js');
 const fs = require (`fs`);
-const Jimp = require(`jimp`)
+const snek = require('snekfetch');
+const Jimp = require(`jimp`);
+const meme = require('memejs');
+const gifSearch = require("gif-search");
 const ms = require (`ms`);
 const planets = require('planet-facts');
 var client = new discord.Client(); 
