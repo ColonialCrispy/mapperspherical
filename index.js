@@ -7,6 +7,7 @@ const gifSearch = require("gif-search");
 const ms = require (`ms`);
 const planets = require('planet-facts');
 var client = new discord.Client(); 
+const api = "https://api.whatdoestrumpthink.com/api/v1/quotes/random";
 let xp = require("./xp.json");
 let orientation = JSON.parse(fs.readFileSync("./orientation.json", "utf8"));
 let gender = JSON.parse(fs.readFileSync("./gender.json", "utf8"));
