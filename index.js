@@ -530,6 +530,19 @@ client.on('message', async (message) => {
             case 3: message.channel.sendEmbed(fembed); break;
         }
     }
+    
+    if (message.content.startsWith(`m!achievement`)) {
+        const aLink = `https://www.minecraftskinstealer.com/achievement/a.php?i=16&h=Achievement+get%21&t=`;
+        const margs = message.content.split(" ").slice(1);
+        if(margs.length > 22) return message.channel.send(`Please make it 22 characters or lower!`)
+        const mmargs = margs.join("+");
+        const mmmargs = (`https://www.minecraftskinstealer.com/achievement/a.php?i=16&h=Achievement+get%21&t=` + mmargs.toUpperCase())
+        let embed = new discord.RichEmbed()
+        embed.setAuthor (`Congratulations!`)
+        embed.setImage(mmmargs)
+        message.channel.send(embed)
+
+    }
 
     if (message.content.startsWith (`m!weather`)) {
 
